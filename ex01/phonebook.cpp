@@ -6,7 +6,7 @@
 /*   By: fgroo <student@42.eu>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:57:49 by fgroo             #+#    #+#             */
-/*   Updated: 2026/04/01 20:35:43 by fgroo            ###   ########.fr       */
+/*   Updated: 2026/04/03 18:24:26 by fgroo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	PhoneBook::SEARCH(void) {
 	for (int i = 0; i < count; ++i) {
 		std::cout << std::setw(5) << i + 1;
 		std::cout << '|';
-		std::cout << (contacts[i].first_name.empty() ? std::string(10, ' ') : if_trunc(contacts[i].first_name));
+		stream_trunc(contacts[i].first_name);
 		std::cout << '|';
-		std::cout << (contacts[i].last_name.empty() ? std::string(10, ' ') : if_trunc(contacts[i].last_name));
+		stream_trunc(contacts[i].last_name);
 		std::cout << '|';
-		std::cout << (contacts[i].nickname.empty() ? std::string(10, ' ') : if_trunc(contacts[i].nickname));
+		stream_trunc(contacts[i].nickname);
 		std::cout << std::endl;
 	}
 	std::cout << "type a number from 1 to 8" << std::endl;
@@ -87,12 +87,12 @@ void	PhoneBook::SEARCH(void) {
 	std::cout << "darkest secret:" << contacts[i].darkest_secret << std::endl;
 }
 
-std::string	PhoneBook::if_trunc(const std::string &s) {
-	int	len;
+void	PhoneBook::stream_trunc(const std::string &s) {
 
-	if ((len = s.length()) > 10)
-		return (s.substr(0, 9) + '.');
-	return (std::string((10 - len), ' ') + s);
+	if (s.length() > 10)
+		std::cout.write(s.data(), 9),  std::cout.put('.');
+	else
+		std::cout.write("          ", 10 - s.length()), std::cout.write(s.data(), s.length());
 }
 
 std::string	PhoneBook::get_input(const std::string &prompt) {

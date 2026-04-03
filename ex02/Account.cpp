@@ -15,25 +15,18 @@
 #include <sstream>
 
 void Account::_displayTimestamp(void) {
-	std::time_t arg;
-	time(&arg);
-	std::tm *local = localtime(&arg);
-	std::stringstream ss;
-	std::string timestamp;
 
-	ss << "[" << local->tm_year + 1900 << ((local->tm_mon + 1) < 10 ? "0" : "") << (local->tm_mon + 1)
-				<< (local->tm_mday < 10 ? "0" : "") << local->tm_mday << "_"
-				<< (local->tm_hour < 10 ? "0" : "") << local->tm_hour
-				<< (local->tm_min < 10 ? "0" : "") << local->tm_min
-				<< (local->tm_sec < 10 ? "0" : "") << local->tm_sec << "]";
-	timestamp = ss.str();
+	char	timestamp[18];
+	std::time_t	time = std::time(NULL);
+
+	std::strftime(timestamp, sizeof(timestamp), "[%Y%m%d_%H%M%S]", std::localtime(&time));
+
 	std::string logfile(timestamp, 1, 15);
 	logfile += ".log";
 	std::FILE *fd = fopen(logfile.c_str(), "w");
-	std::size_t wb = fwrite(timestamp.c_str(), 1, timestamp.length(), fd);
+	std::size_t wb = fwrite(timestamp, 1, 17, fd);
 	(void)wb;
 	fclose(fd);
-	
 
 }
 

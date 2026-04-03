@@ -37,7 +37,7 @@ class	PhoneBook {
 
 		void		ADD(void);
 		void		SEARCH(void);
-		std::string	if_trunc(const std::string &s);
+		void		stream_trunc(const std::string &s);
 		std::string	get_input(const std::string &prompt);
 };
 
