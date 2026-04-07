@@ -3,7 +3,13 @@ NAME = account
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = Account.cpp # tests.cpp
+ifeq ($(DEBUG), 1)
+    CXXFLAGS += -g -O0 -fsanitize=address
+else
+    CXXFLAGS += -O2
+endif
+
+SRCS = Account.cpp tests.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)

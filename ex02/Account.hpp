@@ -18,7 +18,6 @@
 
 class Account {
 
-
 public:
 
 	typedef Account		t;
@@ -37,9 +36,6 @@ public:
 	int		checkAmount( void ) const;
 	void	displayStatus( void ) const;
 
-
-	static void	_displayTimestamp( void );	// TODO: move back to private
-
 private:
 
 	static int	_nbAccounts;
@@ -52,6 +48,7 @@ private:
 	int				_nbDeposits;
 	int				_nbWithdrawals;
 
+	static void	_displayTimestamp( void );
 	Account( void );
 
 };
