@@ -6,13 +6,25 @@
 /*   By: fgroo <student@42.eu>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:57:49 by fgroo             #+#    #+#             */
-/*   Updated: 2026/04/03 18:24:26 by fgroo            ###   ########.fr       */
+/*   Updated: 2026/04/07 19:00:56 by fgroo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phonebook.hpp"
 
 PhoneBook::PhoneBook(void) : count(0) {}
+
+void				Contact::setFirstName(const std::string &s) { _first_name = s; }
+void				Contact::setLastName(const std::string &s) { _last_name = s; }
+void				Contact::setNickname(const std::string &s) { _nickname = s; }
+void				Contact::setPhoneNumber(const std::string &s) { _phone_number = s; }
+void				Contact::setDarkestSecret(const std::string &s) { _darkest_secret = s; }
+
+const std::string	&Contact::getFirstName(void) const { return _first_name; }
+const std::string	&Contact::getLastName(void) const { return _last_name; }
+const std::string	&Contact::getNickname(void) const { return _nickname; }
+const std::string	&Contact::getPhoneNumber(void) const { return _phone_number; }
+const std::string	&Contact::getDarkestSecret(void) const { return _darkest_secret; }
 
 void	PhoneBook::MENU(void) {
 	std::string input;
@@ -40,13 +52,13 @@ void	PhoneBook::ADD(void) {
 	while (--i)
 		contacts[i] = contacts[i - 1];
 
-	contacts[0].first_name = get_input("first name: ");
-	contacts[0].last_name = get_input("last name: ");
-	contacts[0].nickname = get_input("nickname: ");
-	contacts[0].phone_number = get_input("phone number: ");
-	if (contacts[0].phone_number.find_first_not_of("+ 0123456789") != std::string::npos)
+	contacts[0].setFirstName(get_input("first name: "));
+	contacts[0].setLastName(get_input("last name: "));
+	contacts[0].setNickname(get_input("nickname: "));
+	contacts[0].setPhoneNumber(get_input("phone number: "));
+	if (contacts[0].getPhoneNumber().find_first_not_of("+ 0123456789") != std::string::npos)
 		std::cout << "interesting phone number :-O" << std::endl;
-	contacts[0].darkest_secret = get_input("darkest secret: ");
+	contacts[0].setDarkestSecret(get_input("darkest secret: "));
 	if (count < 8)
 		++count;
 }
@@ -55,18 +67,20 @@ void	PhoneBook::SEARCH(void) {
 	std::string	input;
 	int			err_count = 0;
 
+	if (!count)
+		return (std::cout << "no contacts yet" << std::endl, void());
 	std::cout << "index|first name| last name|  nickname" << std::endl;
 	for (int i = 0; i < count; ++i) {
 		std::cout << std::setw(5) << i + 1;
 		std::cout << '|';
-		stream_trunc(contacts[i].first_name);
+		stream_trunc(contacts[i].getFirstName());
 		std::cout << '|';
-		stream_trunc(contacts[i].last_name);
+		stream_trunc(contacts[i].getLastName());
 		std::cout << '|';
-		stream_trunc(contacts[i].nickname);
+		stream_trunc(contacts[i].getNickname());
 		std::cout << std::endl;
 	}
-	std::cout << "type a number from 1 to 8" << std::endl;
+	std::cout << "type a number from 1 to " << count << std::endl;
 	std::getline(std::cin, input);
 	while (input.length() != 1 || (input[0] < '1' || input[0] > count + '0'))
 	{
@@ -80,11 +94,11 @@ void	PhoneBook::SEARCH(void) {
 		std::getline(std::cin, input);
 	}
 	int i = input[0] - 1 - '0';
-	std::cout << "first name:" << contacts[i].first_name << std::endl;
-	std::cout << "last name:" << contacts[i].last_name << std::endl;
-	std::cout << "nickname:" << contacts[i].nickname << std::endl;
-	std::cout << "phone number:" << contacts[i].phone_number << std::endl;
-	std::cout << "darkest secret:" << contacts[i].darkest_secret << std::endl;
+	std::cout << "first name:" << contacts[i].getFirstName() << std::endl;
+	std::cout << "last name:" << contacts[i].getLastName() << std::endl;
+	std::cout << "nickname:" << contacts[i].getNickname() << std::endl;
+	std::cout << "phone number:" << contacts[i].getPhoneNumber() << std::endl;
+	std::cout << "darkest secret:" << contacts[i].getDarkestSecret() << std::endl;
 }
 
 void	PhoneBook::stream_trunc(const std::string &s) {
