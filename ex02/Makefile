@@ -9,19 +9,21 @@ else
     CXXFLAGS += -O2
 endif
 
-SRCS = Account.cpp tests.cpp
-OBJS = $(SRCS:.cpp=.o)
+SRC += Account.cpp
+SRC += tests.cpp
+
+OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.cpp Account.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJ)
 	rm -f *.gch
 
 fclean: clean

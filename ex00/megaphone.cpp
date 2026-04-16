@@ -18,4 +18,3 @@ int main (int ac, char **av)
 	}
 	return (std::cout << std::endl, 0);
 }
-

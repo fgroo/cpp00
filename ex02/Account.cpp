@@ -11,10 +11,7 @@
 #include "Account.hpp"
 
 #include <iostream>
-#include <iomanip>
 #include <ctime>
-#include <cstdio>
-#include <sstream>
 
 int	Account::_nbAccounts = 0;
 int	Account::_totalAmount = 0;

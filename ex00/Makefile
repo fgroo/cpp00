@@ -1,3 +1,5 @@
+.PHONY: all clean fclean re
+
 NAME = megaphone
 
 CXX = c++
@@ -14,8 +16,6 @@ clean:
 fclean: clean
 
 re: fclean all
-
-.PHONY: all clean fclean re
 
 
 
